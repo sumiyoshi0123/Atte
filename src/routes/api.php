@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisteredUserController;
+use App\Http\Controllers\WorkController;
+use Illuminate\Auth\Events\Registered;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +28,13 @@ Route::post('/login',function (Request $request) {
     if (Auth::attempt($credentials)){
         $user = Auth::user();
         $token = $user -> createToken('token-name')-> plainTextToken;
-        return response()->json(['token' => $token]);
+        return response() -> json(['token' => $token]);
     }
 
-    return response()->json(['error' => 'Unauthorized'],401);
+    return response() -> json(['error' => 'Unauthorized'],401);
 });
 
+Route::apiResource('/register', RegisteredUserController::class);
+
+Route::post('/', [WorkController::class, 'start']);
+Route::post('/', [WorkController::class, 'end']);
