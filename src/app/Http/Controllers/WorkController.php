@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\work;
+use App\Models\Work;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -52,19 +52,20 @@ class WorkController extends Controller
     {
         //退勤登録
         $user = Auth::user();
-        $work = Work::where('work_id');
-        $end = ['end_time' => Carbon::now()];
+        $work = Work::where('id','1')->first();
 
-        if($work['work_id'] == NULL){
-            return response()->json([
-                'message' => '出勤していません'
-            ]);
-        }elseif($end['end_time'] == NULL){
-            Work::create($end);
+            //
+            // return response()->json([
+            //     'message' => '出勤していません'
+            // ]);
+            //
+        if($work->end_time == NULL){
+            $work->end_time = Carbon::now();
+            $work->save();
             return response()->json([
                 'message' => 'お疲れ様でした'
             ], 201);
-        }elseif($end['end_time'] !== NULL){
+        }else if($work->end_time !== NULL){
             return response()->json([
                 'message' => '退勤済みです'
             ]);
