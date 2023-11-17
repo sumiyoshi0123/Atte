@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\BleakController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\WorkController;
+use App\Models\Bleak;
 use Illuminate\Auth\Events\Registered;
 
 /*
@@ -38,3 +40,6 @@ Route::apiResource('/register', RegisteredUserController::class);
 
 Route::post('/', [WorkController::class, 'start']);
 Route::post('/', [WorkController::class, 'end']);
+
+Route::post('/', [BleakController::class, 'start']);
+Route::post('/', [BleakController::class, 'end']);

@@ -15,10 +15,10 @@ class CreateWorksTable extends Migration
     {
         Schema::create('works', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained('users');
             $table->date('date');
             $table->TIME('start_time');
-            $table->TIME('end_time');
+            $table->TIME('end_time')->nullable();
             $table->timestamps();
         });
     }

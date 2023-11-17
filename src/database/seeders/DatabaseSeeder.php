@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UsersTableSeeder::class);
         $this->call(WorksTableSeeder::class);
+        $this->call(Bleaks_Table_Seeder::class);
     }
 }
