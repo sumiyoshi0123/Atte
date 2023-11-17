@@ -41,7 +41,7 @@ class BleakController extends Controller
     public function end(Request $request)
     {
         $user = Auth::user();
-        $bleak = Bleak::where('id')->first();
+        $bleak = Bleak::where('id',1)->first();
 
         if ($bleak->end_time == NULL) {
             $bleak->end_time = Carbon::now();
