@@ -26,9 +26,10 @@ class BleakController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function start(Request $request)
+    public function store(Request $request)
     {
-        $work = Auth::user()->work_id;
+        $user = Auth::user();
+        $work = Work::where($request->id)->first();
 
         $bleak = [
             'work_id' => $work,
@@ -36,24 +37,6 @@ class BleakController extends Controller
         ];
 
         Bleak::create($bleak);
-    }
-
-    public function end(Request $request)
-    {
-        $user = Auth::user();
-        $bleak = Bleak::where('id',1)->first();
-
-        if ($bleak->end_time == NULL) {
-            $bleak->end_time = Carbon::now();
-            $bleak->save();   //更新する
-            return response()->json([
-                'message' => ''
-            ], 201);
-        } else if ($bleak->end_time !== NULL) {
-            return response()->json([
-                'message' => ''
-            ]);
-        }
     }
 
     /**
@@ -76,7 +59,20 @@ class BleakController extends Controller
      */
     public function update(Request $request, bleak $bleak)
     {
-        //
+        $user = Auth::user();
+        $bleak = Bleak::where($request->id)->first();
+
+        if ($bleak->end_time == NULL) {
+            $bleak->end_time = Carbon::now();
+            $bleak->save();   //更新する
+            return response()->json([
+                'message' => ''
+            ], 201);
+        } else if ($bleak->end_time != NULL) {
+            return response()->json([
+                'message' => ''
+            ]);
+        }
     }
 
     /**

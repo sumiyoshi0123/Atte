@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;

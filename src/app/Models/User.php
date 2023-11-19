@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
     //リレーション
-    public function works()
+    public function work()
     {
         return $this->hasMany(Work::class);
     }

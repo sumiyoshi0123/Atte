@@ -27,56 +27,31 @@ class WorkController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function start()
+    public function store(Request $request)
     {
         //出勤登録
         $user = Auth::user();
         $day = strtotime('tomorrow');//翌日０時
 
         $work = [
-            'user_id' => $user->id,
+            'user_id' => $request->id,
             'date' => date('Y-m-d'),
             'start_time' => Carbon::now()];
 
-        if($work == NULL){
+        $start = $work['start_time'];
+        $today = $work['date'];
+
+        if($start == NULL){
             Work::create($work);
             return response() -> json([
                 'message' => '出勤しました'
             ], 201);
-        }else if($work !== NULL){
+        }else if(empty($start)){
             return response()->json([
                 'message' => '出勤済みです'
             ]);
-        }else if($work->date = $day){
-            Work::create($work);//翌日０時になったら新たに出勤登録
-        }
-    }
-
-    public function end()
-    {
-        //退勤登録
-        $user = Auth::user();
-        $work = Work::where('id')->first();
-        $today = strtotime("23:59:59");
-
-            //
-            // return response()->json([
-            //     'message' => '出勤していません'
-            // ]);
-            //
-        if($work->end_time == NULL){
-            $work->end_time = Carbon::now();
-            $work->save();   //$workを更新する
-            return response()->json([
-                'message' => 'お疲れ様でした'
-            ], 201);
-        }else if($work->end_time !== NULL){
-            return response()->json([
-                'message' => '退勤済みです'
-            ]);
-        }else if($work->end_time == $today){
-            $work->end_time = $today;
-            $work->save();//当日の23時59分59秒になったら退勤処理
+        }else if($today == $day){
+            Work::create($work);  //翌日０時になったら新たに出勤登録
         }
     }
 
@@ -100,7 +75,29 @@ class WorkController extends Controller
      */
     public function update(Request $request, work $work)
     {
+        //退勤登録
+        $user = Auth::user();
+        $work = Work::where($request->id)->first();
+        $today = strtotime("23:59:59");
+
         //
+        // return response()->json([
+        //     'message' => '出勤していません'
+        // ]);
+        //
+        if ($work->end_time == NULL) {
+            $work->end_time = Carbon::now();
+            $work->save();   //$workを更新する
+            return response()->json([
+                'message' => 'お疲れ様でした'
+            ], 201);
+        } else if ($work->end_time != NULL) {
+            return response()->json([
+                'message' => '退勤済みです'
+            ]);
+        } else if ($work->end_time == $today) {
+            $work->save();  //当日の23時59分59秒になったら退勤処理
+        }
     }
 
     /**
