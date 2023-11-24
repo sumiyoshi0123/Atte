@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\BleakController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,9 @@ Route::post('/login',function (Request $request) {
 
 Route::apiResource('/register', RegisteredUserController::class);
 
-Route::apiResource('/work', WorkController::class);
+Route::apiResource('/work', WorkController::class,)->only(['index','store','update']);
 
-Route::apiResource('/bleak', BleakController::class);
+
+Route::apiResource('/bleak', BleakController::class)->only(['index', 'store', 'update']);
+
+Route::apiResource('/attendance', AttendanceController::class)->only(['index', 'show']);

@@ -32,11 +32,19 @@ class BleakController extends Controller
         $work = Work::where($request->id)->first();
 
         $bleak = [
-            'work_id' => $work,
+            'work_id' => request('work_id'),
             'start_time' => Carbon::now(),
         ];
 
         Bleak::create($bleak);
+
+        $start = $bleak['start_time'];
+
+        if($start != NULL){
+            return response()->json([
+                'message' => "休憩中です"
+            ]);
+        }
     }
 
     /**
@@ -60,17 +68,17 @@ class BleakController extends Controller
     public function update(Request $request, bleak $bleak)
     {
         $user = Auth::user();
-        $bleak = Bleak::where($request->id)->first();
+        $bleak = Bleak::where('id',$bleak->id)->first();
 
         if ($bleak->end_time == NULL) {
             $bleak->end_time = Carbon::now();
             $bleak->save();   //更新する
             return response()->json([
-                'message' => ''
+                'message' => '休憩終了'
             ], 201);
         } else if ($bleak->end_time != NULL) {
             return response()->json([
-                'message' => ''
+                'message' => '休憩終了済'
             ]);
         }
     }
