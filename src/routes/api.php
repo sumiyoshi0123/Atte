@@ -36,11 +36,13 @@ Route::post('/login',function (Request $request) {
     return response() -> json(['error' => 'Unauthorized'],401);
 });
 
-Route::apiResource('/register', RegisteredUserController::class);
+Route::middleware((['auth:sanctum']))->group(function (){
+    Route::apiResource('/register', RegisteredUserController::class);
 
-Route::apiResource('/work', WorkController::class,)->only(['index','store','update']);
+    Route::apiResource('/work', WorkController::class,)->only(['index','store','update']);
 
 
-Route::apiResource('/bleak', BleakController::class)->only(['index', 'store', 'update']);
+    Route::apiResource('/bleak', BleakController::class)->only(['index', 'store', 'update']);
 
-Route::apiResource('/attendance', AttendanceController::class)->only(['index', 'show']);
+    Route::apiResource('/attendance', AttendanceController::class)->only(['index', 'show']);
+});

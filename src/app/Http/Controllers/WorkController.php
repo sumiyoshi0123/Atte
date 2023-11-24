@@ -30,7 +30,7 @@ class WorkController extends Controller
     public function store(Request $request)
     {
         //出勤登録
-        $user = Auth::user();
+        $user = Auth::user();dd($user);
         $day = date('Y-m-d',strtotime('tomorrow')); //翌日０時
 
         $work = [
@@ -49,13 +49,9 @@ class WorkController extends Controller
             ]);
         }
 
-        if($today == $day){
-            Work::create($work);  //翌日０時になったら新たに出勤登録
-        }
-
         Work::create($work);
         return response()->json([
-            'message' => '出勤しました'
+            'message' => '出勤しました' //英語で！
         ], 201);
     }
 
