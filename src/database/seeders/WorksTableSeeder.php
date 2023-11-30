@@ -19,11 +19,38 @@ class WorksTableSeeder extends Seeder
     {
         $param = [
             'user_id' => 1,
-            'date' => date("Y-m-d"),
-            'start_time' => date("H:i:s"),
-            'end_time' => date("H:i:s"),
+            'date' => date('2023-11-28'),
+            'start_time' => date('10:00:00'),
+            'end_time' => date('20:00:00'),
         ];
-
-        Work::create($param);
+        DB::table('works')->insert($param);
+        $param = [
+            'user_id' => 2,
+            'date' => date('2023-11-28'),
+            'start_time' => date('10:00:00'),
+            'end_time' => date('20:00:00'),
+        ];
+        DB::table('works')->insert($param);
+        $param = [
+            'user_id' => 3,
+            'date' => date('2023-11-28'),
+            'start_time' => date('10:00:00'),
+            'end_time' => date('20:00:00'),
+        ];
+        DB::table('works')->insert($param);
+        $param = [
+            'user_id' => 4,
+            'date' => date('2023-11-28'),
+            'start_time' => date('10:00:00'),
+            'end_time' => date('20:00:00'),
+        ];
+        DB::table('works')->insert($param);
+        $param = [
+            'user_id' => 5,
+            'date' => date('2023-11-28'),
+            'start_time' => date('10:00:00'),
+            'end_time' => date('20:00:00'),
+        ];
+        DB::table('works')->insert($param);
     }
 }

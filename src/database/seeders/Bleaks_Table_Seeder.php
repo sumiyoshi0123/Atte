@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use App\Models\Bleak;
 
 class Bleaks_Table_Seeder extends Seeder
@@ -16,10 +17,33 @@ class Bleaks_Table_Seeder extends Seeder
     {
         $param = [
             'work_id' => 1,
-            'start_time' => date("H:i:s"),
-            'end_time' => date("H:i:s"),
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
         ];
-
-        Bleak::create($param);
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 2,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 3,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 4,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 5,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
     }
 }

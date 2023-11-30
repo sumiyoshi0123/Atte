@@ -29,22 +29,19 @@ class BleakController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $work = Work::where($request->id)->first();
+        $today = Carbon::today();
+        $work = Work::where('user_id',$user->id)->where('date',$today)->first();
+        //その日のworkを取り出す
 
         $bleak = [
-            'work_id' => request('work_id'),
+            'work_id' => $work->id,
             'start_time' => Carbon::now(),
         ];
-
-        Bleak::create($bleak);
-
-        $start = $bleak['start_time'];
-
-        if($start != NULL){
-            return response()->json([
-                'message' => "休憩中です"
-            ]);
-        }
+        return response()->json([
+            'work' => $work,
+            'bleak' => $bleak
+        ]);
+        //Bleak::create($bleak);
     }
 
     /**
@@ -74,11 +71,11 @@ class BleakController extends Controller
             $bleak->end_time = Carbon::now();
             $bleak->save();   //更新する
             return response()->json([
-                'message' => '休憩終了'
+                'message' => 'break ends'//休憩終了
             ], 201);
         } else if ($bleak->end_time != NULL) {
             return response()->json([
-                'message' => '休憩終了済'
+                'message' => 'took a break'//休憩済み
             ]);
         }
     }

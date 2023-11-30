@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
         ];
         User::create($user);
         return response() -> json([
-            "message" => "登録が完了しました。"
+            "message" => "Successfully registered"//登録完了
         ], 201);
     }
 

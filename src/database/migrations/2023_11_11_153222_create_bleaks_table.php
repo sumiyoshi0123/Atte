@@ -16,8 +16,8 @@ class CreateBleaksTable extends Migration
         Schema::create('bleaks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('work_id')->constrained('works');
-            $table->TIME('start_time');
-            $table->Time('end_time')->nullable();
+            $table->time('start_time');
+            $table->time('end_time')->nullable();
             $table->timestamps();
         });
     }

@@ -30,11 +30,11 @@ class WorkController extends Controller
     public function store(Request $request)
     {
         //出勤登録
-        $user = Auth::user();dd($user);
+        $user = Auth::user();
         $day = date('Y-m-d',strtotime('tomorrow')); //翌日０時
 
         $work = [
-            'user_id' => request('user_id'),
+            'user_id' => $user->id,
             'date' => date('Y-m-d'),
             'start_time' => Carbon::now()
         ];
@@ -45,13 +45,13 @@ class WorkController extends Controller
 
         if(($workDay == $today) && (empty($start))){
             return response()->json([
-                'message' => '出勤済みです'
+                'message' => 'Be at work'//出勤済
             ]);
         }
 
         Work::create($work);
         return response()->json([
-            'message' => '出勤しました' //英語で！
+            'message' => 'Start of work' //勤務開始
         ], 201);
     }
 
@@ -80,29 +80,25 @@ class WorkController extends Controller
         $work = Work::where('id',$work->id)->first();
         $time = date('H:i:s', strtotime('23:59:59'));
 
-        // return response()->json([
-        //     '' =>
-        // ]);
-
         $end = $work->end_time;
         $workDay = $work->date; //出勤日
         $today = date('Y-m-d'); //現在の日付
 
         if ($end != NULL) {
             return response()->json([
-                'message' => '退勤済みです'
+                'message' => 'Already left work'//退勤済
             ]);
         }else {
             $end = Carbon::now();
             $work->save();   //$workを更新する
             return response()->json([
-                'message' => 'お疲れ様でした'
+                'message' => 'Leaving work'//退勤する
             ], 201);
         }
 
-        if ($workDay != $today) {
-            $end->save($time);  //出勤日の23時59分59秒になったら退勤処理
-        }
+        // if ($workDay != $today) {
+        //     $end->save($time);  //出勤日の23時59分59秒になったら退勤処理
+        // }
     }
 
     /**

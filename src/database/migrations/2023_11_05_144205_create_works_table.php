@@ -17,8 +17,8 @@ class CreateWorksTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->date('date');
-            $table->TIME('start_time');
-            $table->TIME('end_time')->nullable();
+            $table->time('start_time');
+            $table->time('end_time')->nullable();
             $table->timestamps();
         });
     }
