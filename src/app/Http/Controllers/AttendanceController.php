@@ -20,7 +20,7 @@ class AttendanceController extends Controller
         $work = Work::all();
         $bleak = Bleak::all();
 
-        $items = [$user, $work, $bleak];
+        $items = Work::with('user')->with('bleak')->get();
 
         return response()->json([
             'items' => $items

@@ -2108,10 +2108,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       "start_time": "10:00:00",
       "end_time": "20:00:00",
       "created_at": null,
-      "updated_at": null
+      "updated_at": null,
+      "user": {
+        "id": 1,
+        "name": "テスト一郎",
+        "email": "test01@gmail.com",
+        "email_verified_at": null,
+        "created_at": null,
+        "updated_at": null
+      },
+      "bleak": {
+        "id": 1,
+        "work_id": 1,
+        "start_time": "12:00:00",
+        "end_time": "13:00:00",
+        "created_at": null,
+        "updated_at": null
+      },
+      "workTime": 0,
+      "bleakTime": 0
     }]);
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var json, data;
+      var json, data, workTime, bleakTime;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -2119,9 +2137,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             return axios__WEBPACK_IMPORTED_MODULE_1___default().get("http://localhost/api/attendance");
           case 2:
             json = _context.sent;
-            data = json.data.items[0];
-            attendances.value = data;
-          case 5:
+            data = json.data.items;
+            workTime = data.map(function (attendance) {
+              var startDate = new Date(attendance.date + " " + attendance.start_time);
+              var endDate = new Date(attendance.date + " " + attendance.end_time);
+              attendance.workTime = (endDate - startDate) / 1000 / 3600;
+              //ミリ秒->秒->時間へ変換
+
+              return attendance;
+            });
+            attendances.value = workTime;
+            bleakTime = data.map(function (attendance) {
+              var start = new Date(attendance.date + " " + attendance.bleak.start_time);
+              console.log(attendance.bleak.start_time);
+            });
+          case 7:
           case "end":
             return _context.stop();
         }
@@ -2182,7 +2212,7 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", null, [_hoisted_1, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.attendances, function (attendance) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(attendance.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(attendance.start_time), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(attendance.end_time), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(), 1 /* TEXT */)]);
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(attendance.user.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(attendance.start_time), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(attendance.end_time), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(attendance.bleakTime), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(attendance.workTime), 1 /* TEXT */)]);
   }), 256 /* UNKEYED_FRAGMENT */))]);
 }
 
