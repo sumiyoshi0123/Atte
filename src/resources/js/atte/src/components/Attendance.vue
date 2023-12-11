@@ -19,7 +19,7 @@ const attendances = ref([
             "created_at": null,
             "updated_at": null
         },
-        "bleak":
+        "bleak": [
             {
                 "id": 1,
                 "work_id": 1,
@@ -27,7 +27,16 @@ const attendances = ref([
                 "end_time": "13:00:00",
                 "created_at": null,
                 "updated_at": null
-        },
+            },
+            {
+                "id": 2,
+                "work_id": 1,
+                "start_time": "15:00:00",
+                "end_time": "15:30:00",
+                "created_at": null,
+                "updated_at": null
+            }
+        ],
 
         "workTime": 0,
 
@@ -52,9 +61,24 @@ onMounted(async () => {
     attendances.value = workTime;
 
     const bleakTime = data.map((attendance) => {
-        const start = new Date(attendance.date + " " + attendance.bleak.start_time)
+        const total = attendance.bleak.length
+        if (total > 1) {
+            for (const bleak of attendance.bleak) {
+                const start = new Date(attendance.date + " " + bleak.start_time)
+                const end = new Date(attendance.date + " " + bleak.end_time)
 
-        console.log(attendance.bleak.start_time)
+                attendance.bleakTime = (end - start) / 1000 / 3600
+                console.log(attendance.bleakTime)
+            }
+        } else {
+            for (const bleak of attendance.bleak) {
+                const start = new Date(attendance.date + " " + bleak.start_time)
+                const end = new Date(attendance.date + " " + bleak.end_time)
+
+                attendance.bleakTime = (end - start) / 1000 / 3600
+        }
+            return attendance
+        }
     })
 });
 </script>
@@ -72,8 +96,8 @@ onMounted(async () => {
             <th>{{ attendance.user.name }}</th>
             <th>{{ attendance.start_time }}</th>
             <th>{{ attendance.end_time }}</th>
-            <th>{{ attendance.bleakTime}}</th>
-            <th>{{ attendance.workTime }}</th>
+            <th>{{ attendance.bleakTime }}</th>
+            <th>{{ attendance.workTime - attendance.bleakTime }}</th>
         </tr>
     </table>
 </template>
