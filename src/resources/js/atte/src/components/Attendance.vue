@@ -63,23 +63,26 @@ onMounted(async () => {
     const bleakTime = data.map((attendance) => {
         const total = attendance.bleak.length
         if (total > 1) {
-            for (const bleak of attendance.bleak) {
+            const bleakHours = attendance.bleak.map((bleak) => {
                 const start = new Date(attendance.date + " " + bleak.start_time)
                 const end = new Date(attendance.date + " " + bleak.end_time)
-
-                attendance.bleakTime = (end - start) / 1000 / 3600
-                console.log(attendance.bleakTime)
-            }
+                return (end - start) / 1000 / 3600
+            });
+            const totalBleakHours = bleakHours.reduce((sum, bleakHour) => {
+                return sum + bleakHour;
+            }, 0);
+            attendance.bleakTime = totalBleakHours;
         } else {
             for (const bleak of attendance.bleak) {
                 const start = new Date(attendance.date + " " + bleak.start_time)
                 const end = new Date(attendance.date + " " + bleak.end_time)
 
                 attendance.bleakTime = (end - start) / 1000 / 3600
+            }
         }
-            return attendance
-        }
+        return attendance
     })
+    attendances.value = bleakTime;
 });
 </script>
 

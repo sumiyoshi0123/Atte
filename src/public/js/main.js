@@ -2160,6 +2160,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             bleakTime = data.map(function (attendance) {
               var total = attendance.bleak.length;
               if (total > 1) {
+                var bleakHours = attendance.bleak.map(function (bleak) {
+                  var start = new Date(attendance.date + " " + bleak.start_time);
+                  var end = new Date(attendance.date + " " + bleak.end_time);
+                  return (end - start) / 1000 / 3600;
+                });
+                var totalBleakHours = bleakHours.reduce(function (sum, bleakHour) {
+                  return sum + bleakHour;
+                }, 0);
+                attendance.bleakTime = totalBleakHours;
+              } else {
                 var _iterator = _createForOfIteratorHelper(attendance.bleak),
                   _step;
                 try {
@@ -2168,32 +2178,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     var start = new Date(attendance.date + " " + bleak.start_time);
                     var end = new Date(attendance.date + " " + bleak.end_time);
                     attendance.bleakTime = (end - start) / 1000 / 3600;
-                    console.log(attendance.bleakTime);
                   }
                 } catch (err) {
                   _iterator.e(err);
                 } finally {
                   _iterator.f();
                 }
-              } else {
-                var _iterator2 = _createForOfIteratorHelper(attendance.bleak),
-                  _step2;
-                try {
-                  for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-                    var _bleak = _step2.value;
-                    var _start = new Date(attendance.date + " " + _bleak.start_time);
-                    var _end = new Date(attendance.date + " " + _bleak.end_time);
-                    attendance.bleakTime = (_end - _start) / 1000 / 3600;
-                  }
-                } catch (err) {
-                  _iterator2.e(err);
-                } finally {
-                  _iterator2.f();
-                }
-                return attendance;
               }
+              return attendance;
             });
-          case 7:
+            attendances.value = bleakTime;
+          case 8:
           case "end":
             return _context.stop();
         }
