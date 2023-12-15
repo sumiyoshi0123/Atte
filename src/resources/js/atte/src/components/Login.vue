@@ -6,7 +6,7 @@ const email = ref("");
 const password = ref("");
 
 const login = async () => {
-    const json = await axios.post("http://localhost/api/login", {
+    const json = await axios.post("http;//localhost/api/login", {
         email: email.value,
         password: password.value
     });

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import Login from './components/Login';
-import Attendance from './components/Attendance';
+import Login from './components/Login.vue';
+import Attendance from './components/Attendance.vue';
 
 const routes = [
     {
