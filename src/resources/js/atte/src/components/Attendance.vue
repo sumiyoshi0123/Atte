@@ -71,7 +71,7 @@ onMounted(async () => {
             const totalBleakHours = bleakHours.reduce((sum, bleakHour) => {
                 return sum + bleakHour;
             }, 0);
-            attendance.bleakTime = totalBleakHours;
+                attendance.bleakTime = totalBleakHours;
         } else {
             for (const bleak of attendance.bleak) {
                 const start = new Date(attendance.date + " " + bleak.start_time)

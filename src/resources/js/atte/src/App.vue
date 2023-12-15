@@ -1,15 +1,13 @@
 <template>
-    <Attendance />
+    <div id ="app">
+        <router-view />
+    </div>
 </template>
 
 <script>
-import Attendance from "./components/Attendance.vue";
 
 export default {
-    name: "App",
-    components: {
-        Attendance,
-    },
+    components: {}
 };
 </script>
 
