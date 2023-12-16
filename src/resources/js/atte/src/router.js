@@ -20,4 +20,8 @@ const router = createRouter({
     routes
 });
 
+router.beforeEach((to, from, next) => {
+    console.log(to.name);
+    next();
+})
 export default router;

@@ -19409,7 +19409,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().post("http;//localhost/api/login", {
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://localhost/api/login", {
                 email: email.value,
                 password: password.value
               });
@@ -19539,23 +19539,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
-/* harmony import */ var _components_Login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Login */ "./resources/js/atte/src/components/Login.vue");
-/* harmony import */ var _components_Attendance__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Attendance */ "./resources/js/atte/src/components/Attendance.vue");
+/* harmony import */ var _components_Login_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Login.vue */ "./resources/js/atte/src/components/Login.vue");
+/* harmony import */ var _components_Attendance_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Attendance.vue */ "./resources/js/atte/src/components/Attendance.vue");
 
 
 
 var routes = [{
   path: "/",
   name: "attendance",
-  component: _components_Attendance__WEBPACK_IMPORTED_MODULE_1__["default"]
+  component: _components_Attendance_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
 }, {
   path: "/login",
   name: "login",
-  component: _components_Login__WEBPACK_IMPORTED_MODULE_0__["default"]
+  component: _components_Login_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
 }];
 var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.createRouter)({
   history: (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.createWebHashHistory)(),
   routes: routes
+});
+router.beforeEach(function (to, from, next) {
+  console.log(to.name);
+  next();
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
