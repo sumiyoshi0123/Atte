@@ -87,20 +87,86 @@ onMounted(async () => {
 </script>
 
 <template>
-    <table>
-        <tr>
-            <th>名前</th>
-            <th>勤務開始</th>
-            <th>勤務終了</th>
-            <th>休憩時間</th>
-            <th>勤務時間</th>
-        </tr>
-        <tr v-for="attendance in attendances" >
-            <th>{{ attendance.user.name }}</th>
-            <th>{{ attendance.start_time }}</th>
-            <th>{{ attendance.end_time }}</th>
-            <th>{{ attendance.bleakTime }}</th>
-            <th>{{ attendance.workTime - attendance.bleakTime }}</th>
-        </tr>
-    </table>
+    <header>
+        <h1 class="header-logo">Atte</h1>
+        <nav>
+            <ul class="header-menu">
+                <li class="header-menu__item">ホーム</li>
+                <li class="header-menu__item">日付一覧</li>
+                <li class="header-menu__item">ログアウト</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="index">
+            <div class="date">日付</div>
+            <table class="work-data">
+                <tr class="work-data__title">
+                    <th>名前</th>
+                    <th>勤務開始</th>
+                    <th>勤務終了</th>
+                    <th>休憩時間</th>
+                    <th>勤務時間</th>
+                </tr>
+                <tr class="work-data__value" v-for="attendance in attendances" >
+                    <th>{{ attendance.user.name }}</th>
+                    <th>{{ attendance.start_time }}</th>
+                    <th>{{ attendance.end_time }}</th>
+                    <th>{{ attendance.bleakTime }}</th>
+                    <th>{{ attendance.workTime - attendance.bleakTime }}</th>
+                    </tr>
+            </table>
+            <!-- <v-pagination
+                v-model="currentPage"
+                :length="getPageCount"
+                :click-handler="clickCallback"
+                :page-range="10"
+                :margin-pages="2"
+                :prev-text="'<'"
+                :next-text="'>'"
+                :container-class="'pagination'"
+                :page-link-class="'page-link'">
+            </v-pagination> -->
+        </div>
+    </main>
 </template>
+
+<style>
+    header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .header-logo {
+        margin-left: 40px;
+    }
+    .header-menu {
+        display: flex;
+        list-style: none;
+    }
+    .header-menu__item{
+        margin-top: 20px;
+        margin-right: 40px;
+        font-weight: bold;
+    }
+    .index {
+        height: 600px;
+        padding-top: 30px;
+        background-color: #F2F2F2;
+    }
+    .date {
+        margin-bottom: 30px;
+    }
+    .work-data {
+        width: 90%;
+        margin: 0px auto;
+        border-collapse: collapse;
+        border-top: 1px solid;
+    }
+    .work-data__title {
+        height: 70px;
+    }
+    .work-data__value {
+        height: 70px;
+        border-top: 1px solid;
+    }
+</style>
