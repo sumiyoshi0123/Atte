@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
 
 const email = ref("");
 const password = ref("");
+const router = useRouter();
 
 const login = async () => {
     const json = await axios.post("http://localhost/api/login", {
@@ -11,6 +13,10 @@ const login = async () => {
         password: password.value
     });
     console.log(json.data.token);
+    const token = "1|ltOxtxqHjGRtTmXBevB4e5TyVRsaopIZi3BuB2Hy";
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    localStorage.setItem("token", token);
+    router.push({ name: "attendance"});
 }
 </script>
 
