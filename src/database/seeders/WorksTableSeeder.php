@@ -52,5 +52,19 @@ class WorksTableSeeder extends Seeder
             'end_time' => date('20:00:00'),
         ];
         DB::table('works')->insert($param);
+        $param = [
+            'user_id' => 6,
+            'date' => date('2023-11-28'),
+            'start_time' => date('10:00:00'),
+            'end_time' => date('20:00:00'),
+        ];
+        DB::table('works')->insert($param);
+        $param = [
+            'user_id' => 7,
+            'date' => date('2023-11-28'),
+            'start_time' => date('10:00:00'),
+            'end_time' => date('20:00:00'),
+        ];
+        DB::table('works')->insert($param);
     }
 }

@@ -13,7 +13,7 @@ const login = async () => {
         password: password.value
     });
     console.log(json.data.token);
-    const token = "1|ltOxtxqHjGRtTmXBevB4e5TyVRsaopIZi3BuB2Hy";
+    const token = "1|Fe8kOZkab0IPH9wC0COUZBBhbZy9V8P4ihYnlyJR";
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     localStorage.setItem("token", token);
     router.push({ name: "attendance"});

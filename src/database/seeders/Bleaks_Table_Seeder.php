@@ -51,5 +51,17 @@ class Bleaks_Table_Seeder extends Seeder
             'end_time' => date('13:00:00'),
         ];
         DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 6,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 7,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
     }
 }

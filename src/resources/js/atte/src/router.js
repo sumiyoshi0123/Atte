@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Login from './components/Login.vue';
 import Attendance from './components/Attendance.vue';
+import Stamp from './components/Stamp.vue';
 
 const routes = [
     {
@@ -13,6 +14,11 @@ const routes = [
         name: "login",
         component: Login
     },
+    {
+        path: "/stamp",
+        name: "stamp",
+        component: Stamp
+    }
 ];
 
 const router = createRouter({

@@ -116,6 +116,14 @@ onMounted(async () => {
                     <th>{{ attendance.workTime - attendance.bleakTime }}</th>
                     </tr>
             </table>
+            <v-pagination
+                :length="getPageCount"
+                :click-handler="clickCallback"
+                :prev-text="'<'"
+                :next-text="'>'"
+                :container-class="'pagination'"
+                :page-link-class="'page-link'">
+            </v-pagination>
         </div>
     </main>
 </template>
