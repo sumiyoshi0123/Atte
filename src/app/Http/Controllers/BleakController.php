@@ -41,7 +41,7 @@ class BleakController extends Controller
             'work' => $work,
             'bleak' => $bleak
         ]);
-        //Bleak::create($bleak);
+        Bleak::create($bleak);
     }
 
     /**

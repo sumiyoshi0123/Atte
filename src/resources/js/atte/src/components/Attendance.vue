@@ -117,12 +117,8 @@ onMounted(async () => {
                     </tr>
             </table>
             <v-pagination
-                :length="getPageCount"
-                :click-handler="clickCallback"
-                :prev-text="'<'"
-                :next-text="'>'"
-                :container-class="'pagination'"
-                :page-link-class="'page-link'">
+                v-model="page"
+                length="5">
             </v-pagination>
         </div>
     </main>
@@ -146,7 +142,6 @@ onMounted(async () => {
         font-weight: bold;
     }
     .index {
-        height: 600px;
         padding-top: 30px;
         background-color: #F2F2F2;
     }

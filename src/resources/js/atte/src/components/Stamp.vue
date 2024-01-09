@@ -3,20 +3,16 @@ import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-const email = ref("");
-const password = ref("");
-const router = useRouter();
+//出勤登録
+const start = ref({
+    start: new Date()
+});
 
-const login = async () => {
-    const json = await axios.post("http://localhost/api/login", {
-        email: email.value,
-        password: password.value
+const addWork = async() => {
+    const json = await axios.post('https://localhost/api/stamp', {
+        addWork: start.value
     });
-    console.log(json.data.token);
-    const token = "1|Fe8kOZkab0IPH9wC0COUZBBhbZy9V8P4ihYnlyJR";
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    localStorage.setItem("token", token);
-    router.push({ name: "stamp" });
+    alert('${start.value} 出勤完了')
 }
 
 </script>
@@ -36,10 +32,10 @@ const login = async () => {
             <div class="stamp">
                 <div class="message">さんお疲れ様です！</div>
                 <div class="stamp-items">
-                    <div class="stamp-item__1">勤務開始</div>
-                    <div class="stamp-item__2">勤務終了</div>
-                    <div class="stamp-item__3">休憩開始</div>
-                    <div class="stamp-item__4">休憩終了</div>
+                    <button class="stamp-item__1" @click="addWork">勤務開始</button>
+                    <button class="stamp-item__2" @click="">勤務終了</button>
+                    <button class="stamp-item__3" @click="">休憩開始</button>
+                    <button class="stamp-item__4" @click="">休憩終了</button>
                 </div>
             </div>
         </main>

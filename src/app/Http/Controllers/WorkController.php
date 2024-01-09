@@ -78,11 +78,8 @@ class WorkController extends Controller
         //退勤登録
         $user = Auth::user();
         $work = Work::where('id',$work->id)->first();
-        $time = date('H:i:s', strtotime('23:59:59'));
 
         $end = $work->end_time;
-        $workDay = $work->date; //出勤日
-        $today = date('Y-m-d'); //現在の日付
 
         if ($end != NULL) {
             return response()->json([
@@ -95,10 +92,6 @@ class WorkController extends Controller
                 'message' => 'Leaving work'//退勤する
             ], 201);
         }
-
-        // if ($workDay != $today) {
-        //     $end->save($time);  //出勤日の23時59分59秒になったら退勤処理
-        // }
     }
 
     /**
