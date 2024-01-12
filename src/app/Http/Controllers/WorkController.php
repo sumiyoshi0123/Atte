@@ -79,18 +79,16 @@ class WorkController extends Controller
         $user = Auth::user();
         $work = Work::where('id',$work->id)->first();
 
-        $end = $work->end_time;
-
-        if ($end != NULL) {
-            return response()->json([
-                'message' => 'Already left work'//退勤済
-            ]);
-        }else {
-            $end = Carbon::now();
+        if ($work->end_time == NULL) {
+            $work->end_time = Carbon::now();
             $work->save();   //$workを更新する
             return response()->json([
-                'message' => 'Leaving work'//退勤する
+                'message' => 'Leaving work' //退勤する
             ], 201);
+        } else if ($work->end_time != NULL) {
+            return response()->json([
+                'message' => 'Already left work' //退勤済
+            ]);
         }
     }
 
@@ -103,5 +101,14 @@ class WorkController extends Controller
     public function destroy(work $work)
     {
         //
+    }
+
+    public function workEnd(Request $request)
+    {
+        $user = Auth::user();
+        $today = Carbon::today();
+        $work = Work::where('user_id', $user->id)->where('date', $today)->where('end_time', null)->first();
+
+        return $this->update($request, $work);
     }
 }

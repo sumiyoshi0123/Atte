@@ -37,11 +37,14 @@ class BleakController extends Controller
             'work_id' => $work->id,
             'start_time' => Carbon::now(),
         ];
+
+        Bleak::create($bleak);
+
         return response()->json([
             'work' => $work,
             'bleak' => $bleak
         ]);
-        Bleak::create($bleak);
+
     }
 
     /**
@@ -89,5 +92,17 @@ class BleakController extends Controller
     public function destroy(bleak $bleak)
     {
         //
+    }
+
+    public function bleakEnd(Request $request)
+    {
+        $user = Auth::user();
+        $today = Carbon::today();
+        $work = Work::where('user_id', $user->id)->where('date', $today)->first();
+
+        $bleak = Bleak::where('work_id', $work->id)->where('end_time', null)->first();
+
+        return $this->update($request, $bleak);
+
     }
 }

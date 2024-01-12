@@ -40,8 +40,10 @@ Route::middleware((['auth:sanctum']))->group(function (){
     Route::apiResource('/register', RegisteredUserController::class);
 
     Route::apiResource('/work', WorkController::class,);
+    Route::put('/work', [WorkController::class, 'workEnd']);
 
     Route::apiResource('/bleak', BleakController::class);
+    Route::put('/bleak', [BleakController::class, 'bleakEnd']);
 
     Route::apiResource('/attendance', AttendanceController::class);
 });
