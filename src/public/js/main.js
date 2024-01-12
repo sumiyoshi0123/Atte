@@ -19480,9 +19480,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
-//出勤登録
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   __name: 'Stamp',
   setup: function setup(__props, _ref) {
@@ -19491,6 +19488,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var start = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({
       start: new Date()
     });
+    var end = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({
+      end: new Date()
+    });
+
+    //出勤登録
     var addWork = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var json;
@@ -19498,12 +19500,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('https://localhost/api/stamp', {
-                addWork: start.value
-              });
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost/api/work');
             case 2:
               json = _context.sent;
-              alert('${start.value} 出勤完了');
+              alert("".concat(start.value, " work start"));
             case 4:
             case "end":
               return _context.stop();
@@ -19514,9 +19514,82 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _ref2.apply(this, arguments);
       };
     }();
+
+    //休憩開始
+    var addBleak = /*#__PURE__*/function () {
+      var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var json;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost/api/bleak');
+            case 2:
+              json = _context2.sent;
+              alert("".concat(start.value, " bleak start"));
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2);
+      }));
+      return function addBleak() {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+
+    //休憩終了
+    var endBleak = /*#__PURE__*/function () {
+      var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var json;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost/api/bleak');
+            case 2:
+              json = _context3.sent;
+              alert("".concat(end.value, " bleak end"));
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3);
+      }));
+      return function endBleak() {
+        return _ref4.apply(this, arguments);
+      };
+    }();
+
+    //退勤登録
+    var endWork = /*#__PURE__*/function () {
+      var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var json;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().put('http://localhost/api/work');
+            case 2:
+              json = _context4.sent;
+              alert("".concat(end.value, " work end"));
+            case 4:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4);
+      }));
+      return function endWork() {
+        return _ref5.apply(this, arguments);
+      };
+    }();
     var __returned__ = {
       start: start,
+      end: end,
       addWork: addWork,
+      addBleak: addBleak,
+      endBleak: endBleak,
+      endWork: endWork,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
       get axios() {
         return (axios__WEBPACK_IMPORTED_MODULE_1___default());
@@ -19678,28 +19751,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<header><h1 class=\"header-logo\">Atte</h1><nav><ul class=\"header-menu\"><li class=\"header-menu__item\">ホーム</li><li class=\"header-menu__item\">日付一覧</li><li class=\"header-menu__item\">ログアウト</li></ul></nav></header>", 1);
-var _hoisted_2 = {
-  "class": "stamp"
-};
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "message"
 }, "さんお疲れ様です！", -1 /* HOISTED */);
-var _hoisted_4 = {
-  "class": "stamp-items"
-};
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "stamp"
+  }, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "stamp-items"
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "stamp-item__1",
     onClick: $setup.addWork
   }, "勤務開始"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "stamp-item__2",
-    onClick: _cache[0] || (_cache[0] = function () {})
+    onClick: $setup.endWork
   }, "勤務終了"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "stamp-item__3",
-    onClick: _cache[1] || (_cache[1] = function () {})
+    onClick: $setup.addBleak
   }, "休憩開始"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "stamp-item__4",
-    onClick: _cache[2] || (_cache[2] = function () {})
+    onClick: $setup.endBleak
   }, "休憩終了")])])])], 64 /* STABLE_FRAGMENT */);
 }
 

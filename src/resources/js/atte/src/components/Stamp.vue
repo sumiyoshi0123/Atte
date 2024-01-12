@@ -3,17 +3,38 @@ import { ref } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
-//出勤登録
 const start = ref({
     start: new Date()
 });
 
+const end = ref({
+    end: new Date()
+});
+
+//出勤登録
 const addWork = async() => {
-    const json = await axios.post('https://localhost/api/stamp', {
-        addWork: start.value
-    });
-    alert('${start.value} 出勤完了')
+    const json = await axios.post('http://localhost/api/work');
+    alert(`${start.value} work start`)
 }
+
+//休憩開始
+const addBleak = async () => {
+    const json = await axios.post('http://localhost/api/bleak');
+    alert(`${start.value} bleak start`)
+}
+
+//休憩終了
+const endBleak = async () => {
+    const json = await axios.put('http://localhost/api/bleak');
+    alert(`${end.value} bleak end`)
+}
+
+//退勤登録
+const endWork = async () => {
+    const json = await axios.put('http://localhost/api/work');
+    alert(`${end.value} work end`)
+}
+
 
 </script>
 
@@ -33,9 +54,9 @@ const addWork = async() => {
                 <div class="message">さんお疲れ様です！</div>
                 <div class="stamp-items">
                     <button class="stamp-item__1" @click="addWork">勤務開始</button>
-                    <button class="stamp-item__2" @click="">勤務終了</button>
-                    <button class="stamp-item__3" @click="">休憩開始</button>
-                    <button class="stamp-item__4" @click="">休憩終了</button>
+                    <button class="stamp-item__2" @click="endWork">勤務終了</button>
+                    <button class="stamp-item__3" @click="addBleak">休憩開始</button>
+                    <button class="stamp-item__4" @click="endBleak">休憩終了</button>
                 </div>
             </div>
         </main>
