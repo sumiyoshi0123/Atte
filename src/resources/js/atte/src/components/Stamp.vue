@@ -18,24 +18,29 @@ const addWork = async() => {
 }
 
 //休憩開始
-const addBleak = async () => {
+const addBleak = async() => {
     const json = await axios.post('http://localhost/api/bleak');
     alert(`${start.value} bleak start`)
 }
 
 //休憩終了
-const endBleak = async () => {
+const endBleak = async() => {
     const json = await axios.put('http://localhost/api/bleak');
     alert(`${end.value} bleak end`)
 }
 
 //退勤登録
-const endWork = async () => {
+const endWork = async() => {
     const json = await axios.put('http://localhost/api/work');
     alert(`${end.value} work end`)
 }
 
-
+//ログアウト機能
+const router = useRouter();
+const logout = async () => {
+    localStorage.removeItem('token');
+    router.push({ name: "login" });
+}
 </script>
 
 <template>
@@ -45,7 +50,7 @@ const endWork = async () => {
                 <ul class="header-menu">
                     <li class="header-menu__item">ホーム</li>
                     <li class="header-menu__item">日付一覧</li>
-                    <li class="header-menu__item">ログアウト</li>
+                    <li><button class="header-menu__item" @click="logout">ログアウト</button></li>
                 </ul>
             </nav>
         </header>

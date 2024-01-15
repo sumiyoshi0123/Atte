@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
 
 const attendances = ref([
     {
@@ -84,6 +85,13 @@ onMounted(async () => {
     })
     attendances.value = bleakTime;
 });
+
+//ログアウト機能
+const router = useRouter();
+const logout = async () => {
+    localStorage.removeItem('token');
+    router.push({ name: "login" });
+}
 </script>
 
 <template>
@@ -93,7 +101,7 @@ onMounted(async () => {
             <ul class="header-menu">
                 <li class="header-menu__item">ホーム</li>
                 <li class="header-menu__item">日付一覧</li>
-                <li class="header-menu__item">ログアウト</li>
+                <li><button class="header-menu__item" @click="logout">ログアウト</button></li>
             </ul>
         </nav>
     </header>
