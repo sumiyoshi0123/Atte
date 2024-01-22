@@ -47,7 +47,8 @@ const attendances = ref([
 
 onMounted(async () => {
     const json = await axios.get("http://localhost/api/attendance");
-    const data = json.data.items;
+    const data = json.data.items.data;
+    console.log(data)
 
     const workTime = data.map((attendance) => {
         const startDate = new Date(attendance.date + " " + attendance.start_time)
@@ -92,6 +93,15 @@ const logout = async () => {
     localStorage.removeItem('token');
     router.push({ name: "login" });
 }
+
+// 値変更時に取得
+function get() {
+
+    console.log(document.getElementById("setDate").value);
+
+}
+
+
 </script>
 
 <template>
@@ -101,13 +111,15 @@ const logout = async () => {
             <ul class="header-menu">
                 <li class="header-menu__item">ホーム</li>
                 <li class="header-menu__item">日付一覧</li>
-                <li><button class="header-menu__item" @click="logout">ログアウト</button></li>
+                <li><button class="header-menu__item" @click="logout()">ログアウト</button></li>
             </ul>
         </nav>
     </header>
     <main>
         <div class="index">
-            <div class="date">日付</div>
+            <form class="date">
+                <input type="date" id="setDate" onchange="get()">
+            </form>
             <table class="work-data">
                 <tr class="work-data__title">
                     <th>名前</th>

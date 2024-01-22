@@ -11,6 +11,9 @@ const end = ref({
     end: new Date()
 });
 
+//ログインユーザー名
+const user = ref()
+
 //出勤登録
 const addWork = async() => {
     const json = await axios.post('http://localhost/api/work');
@@ -50,13 +53,13 @@ const logout = async () => {
                 <ul class="header-menu">
                     <li class="header-menu__item">ホーム</li>
                     <li class="header-menu__item">日付一覧</li>
-                    <li><button class="header-menu__item" @click="logout">ログアウト</button></li>
+                    <li><button class="header-menu__item" @click="logout()">ログアウト</button></li>
                 </ul>
             </nav>
         </header>
         <main>
             <div class="stamp">
-                <div class="message">さんお疲れ様です！</div>
+                <div class="message">{{ user }}さんお疲れ様です！</div>
                 <div class="stamp-items">
                     <button class="stamp-item__1" @click="addWork">勤務開始</button>
                     <button class="stamp-item__2" @click="endWork">勤務終了</button>
