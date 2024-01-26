@@ -94,11 +94,14 @@ const logout = async () => {
     router.push({ name: "login" });
 }
 
-// 値変更時に取得
-function get() {
+//日付を選択して表示
+const setDate = ref('');
 
-    console.log(document.getElementById("setDate").value);
-
+const workDay = async () => {
+    const json = await axios.post("http://localhost/api/attendance", {
+        setDate: setDate.value,
+    });
+    console.log(json.data);
 }
 
 
@@ -117,9 +120,11 @@ function get() {
     </header>
     <main>
         <div class="index">
-            <form class="date">
-                <input type="date" id="setDate" onchange="get()">
-            </form>
+            <div class="date">
+                <input type="date"  v-model="setDate">
+                <button @click="workDay">get</button>
+                <p class="work-day">勤務日 : {{ setDate }}</p>
+            </div>
             <table class="work-data">
                 <tr class="work-data__title">
                     <th>名前</th>
@@ -167,6 +172,10 @@ function get() {
     }
     .date {
         margin-bottom: 30px;
+    }
+    .work-day {
+        margin-top: 20px;
+        font-size: 20px;
     }
     .work-data {
         width: 90%;
