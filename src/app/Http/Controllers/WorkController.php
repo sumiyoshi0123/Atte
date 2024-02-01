@@ -6,7 +6,6 @@ use App\Models\Work;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Support\Facades\Auth;
 
 class WorkController extends Controller
@@ -31,7 +30,6 @@ class WorkController extends Controller
     {
         //出勤登録
         $user = Auth::user();
-        $day = date('Y-m-d',strtotime('tomorrow')); //翌日０時
 
         $work = [
             'user_id' => $user->id,

@@ -18,11 +18,11 @@ class AttendanceController extends Controller
      */
     public function index(Request $request)
     {
-        $user = User::select('name')->get();
-        $work = Work::all();
-        $bleak = Bleak::all();
+        User::select('name')->get();
+        Work::all();
+        Bleak::all();
 
-        $items = Work::with('user')->with('bleak')->paginate(5);
+        $items = Work::where('date', $request->setDate)->with('user')->with('bleak')->paginate(5);
 
         return response()->json([
             'items' => $items

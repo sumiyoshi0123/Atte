@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class RegisteredUserController extends Controller
 {
@@ -16,7 +17,14 @@ class RegisteredUserController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        User::all();
+
+        $userName = User::where('name', $user->name)->get();
+
+        return response()->json([
+            'userName' => $userName
+        ]);
     }
 
     /**

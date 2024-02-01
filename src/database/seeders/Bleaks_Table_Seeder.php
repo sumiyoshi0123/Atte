@@ -63,5 +63,54 @@ class Bleaks_Table_Seeder extends Seeder
             'end_time' => date('13:00:00'),
         ];
         DB::table('bleaks')->insert($param);
+
+        $param = [
+            'work_id' => 8,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 8,
+            'start_time' => date('15:00:00'),
+            'end_time' => date('15:30:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 9,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 10,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 11,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 12,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 13,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
+        $param = [
+            'work_id' => 14,
+            'start_time' => date('12:00:00'),
+            'end_time' => date('13:00:00'),
+        ];
+        DB::table('bleaks')->insert($param);
     }
 }

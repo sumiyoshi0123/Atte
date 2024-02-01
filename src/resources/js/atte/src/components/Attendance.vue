@@ -46,9 +46,21 @@ const attendances = ref([
 ]);
 
 onMounted(async () => {
-    const json = await axios.get("http://localhost/api/attendance");
+    const today = new Date();
+    today.setDate(today.getDate());
+    const yyyy = today.getFullYear();
+    const mm = ("0" + (today.getMonth() + 1)).slice(-2);
+    const dd = ("0" + today.getDate()).slice(-2);
+    setDate.value = yyyy + "-" + mm + "-" + dd;
+
+    const json = await axios.get("http://localhost/api/attendance", {
+        params: {
+            // ここにクエリパラメータを指定する
+            setDate: setDate.value
+        }
+    });
     const data = json.data.items.data;
-    console.log(data)
+    // console.log(data)
 
     const workTime = data.map((attendance) => {
         const startDate = new Date(attendance.date + " " + attendance.start_time)
@@ -98,12 +110,13 @@ const logout = async () => {
 const setDate = ref('');
 
 const workDay = async () => {
-    const json = await axios.post("http://localhost/api/attendance", {
-        setDate: setDate.value,
+    const json = await axios.get("http://localhost/api/attendance", {
+        params: {
+            setDate: setDate.value,
+        }
     });
     console.log(json.data);
 }
-
 
 </script>
 
@@ -122,7 +135,7 @@ const workDay = async () => {
         <div class="index">
             <div class="date">
                 <input type="date"  v-model="setDate">
-                <button @click="workDay">get</button>
+                <button class="get-date" @click="workDay">表示</button>
                 <p class="work-day">勤務日 : {{ setDate }}</p>
             </div>
             <table class="work-data">
@@ -172,6 +185,9 @@ const workDay = async () => {
     }
     .date {
         margin-bottom: 30px;
+    }
+    .get-date {
+        padding-left: 10px;
     }
     .work-day {
         margin-top: 20px;

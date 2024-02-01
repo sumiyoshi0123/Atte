@@ -60,6 +60,7 @@ const login = async () => {
         width: 300px;
         height: 30px;
         margin-bottom: 20px;
+        border: solid 1px;
     }
     .login-form__button {
         width: 310px;
@@ -68,9 +69,8 @@ const login = async () => {
         background-color: blue;
     }
     .message {
-        font-size: 12px;
         margin-top: 30px;
-        margin-bottom: 0;
+        font-size: 12px;
     }
     .link {
         font-size: 12px;
