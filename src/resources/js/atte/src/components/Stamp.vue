@@ -47,8 +47,14 @@ const endWork = async() => {
     alert(`${end.value} work end`)
 }
 
-//ログアウト機能
 const router = useRouter();
+
+//日付一覧ページへ移動
+const list = async () => {
+    router.push({ name: "attendance" });
+}
+
+//ログアウト機能
 const logout = async () => {
     localStorage.removeItem('token');
     router.push({ name: "login" });
@@ -61,7 +67,7 @@ const logout = async () => {
             <nav>
                 <ul class="header-menu">
                     <li class="header-menu__item">ホーム</li>
-                    <li class="header-menu__item">日付一覧</li>
+                    <li><button class="header-menu__item" @click="list()">日付一覧</button></li>
                     <li><button class="header-menu__item" @click="logout()">ログアウト</button></li>
                 </ul>
             </nav>

@@ -16,7 +16,7 @@ const login = async () => {
     const token = json.data.token;
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     localStorage.setItem("token", token);
-    router.push({ name: "attendance"});
+    router.push({ name: "stamp"}); //ログイン後はStamp.vueへ移動
 }
 </script>
 
@@ -28,11 +28,11 @@ const login = async () => {
         <div class="login-form">
             <h3 class="login-form__title">ログイン</h3>
             <div class="login-form__item">
-                <input class="email" type="text" v-model="email" placeholder="メールアドレス"/>
-                <input class="pass" type="text" v-model="password" placeholder="パスワード"/>
+                <input class="email" type="text" v-model="email" placeholder="  メールアドレス"/>
+                <input class="pass" type="text" v-model="password" placeholder="  パスワード"/>
             </div>
             <button class="login-form__button" @click="login()">ログイン</button>
-            <p class="message">アカウントをお持ちでない方はこちらから</p>
+            <p class="guide">アカウントをお持ちでない方はこちらから</p>
             <a class="link" href="/register">会員登録</a>
         </div>
     </main>
@@ -58,17 +58,19 @@ const login = async () => {
     }
     .email, .pass {
         width: 300px;
-        height: 30px;
+        height: 40px;
         margin-bottom: 20px;
         border: solid 1px;
+        font-size: 14px;
     }
     .login-form__button {
         width: 310px;
         height: 40px;
         color: white;
         background-color: blue;
+        font-size: 14px;
     }
-    .message {
+    .guide {
         margin-top: 30px;
         font-size: 12px;
     }

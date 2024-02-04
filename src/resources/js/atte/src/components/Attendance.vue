@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, onUpdated } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
@@ -46,17 +46,22 @@ const attendances = ref([
 ]);
 
 onMounted(async () => {
-    const today = new Date();
-    today.setDate(today.getDate());
+    const today = new Date(); //今日の日付を取得
     const yyyy = today.getFullYear();
-    const mm = ("0" + (today.getMonth() + 1)).slice(-2);
+    const mm = ("0" + (today.getMonth() + 1)).slice(-2); //0 + 月(1~12)の右から2文字を指定
     const dd = ("0" + today.getDate()).slice(-2);
     setDate.value = yyyy + "-" + mm + "-" + dd;
+    //setDate.value = "2024-01-31";
 
+    fetchAttendances(); //attendancesの内容を書き換えて表示するメソッド
+});
+
+const fetchAttendances = async() => {
     const json = await axios.get("http://localhost/api/attendance", {
         params: {
             // ここにクエリパラメータを指定する
-            setDate: setDate.value
+            setDate: setDate.value,
+            page: page.value,
         }
     });
     const data = json.data.items.data;
@@ -97,26 +102,54 @@ onMounted(async () => {
         return attendance
     })
     attendances.value = bleakTime;
+};
+
+
+//日付を変える処理
+const today = new Date(); //今日の日付を取得
+
+//1日前にする
+const prev = async () => {
+    today.setDate(today.getDate() - 1);
+    console.log(today);
+}
+//1日後にする
+const next = async () => {
+    today.setDate(today.getDate() + 1);
+    console.log(today);
+}
+
+//無限ループが発生?
+onUpdated(async () => {
+    const workDay = new Date(today);
+    const yyyy = workDay.getFullYear();
+    const mm = ("0" + (workDay.getMonth() + 1)).slice(-2);
+    const dd = ("0" + workDay.getDate()).slice(-2);
+    setDate.value = yyyy + "-" + mm + "-" + dd;
+
+    fetchAttendances();
 });
 
-//ログアウト機能
+
+
 const router = useRouter();
+
+//日付一覧ボタンを押すとstamp.vueへ移動
+const home = async () => {
+    router.push({ name: "stamp" });
+}
+
+//ログアウト機能
 const logout = async () => {
     localStorage.removeItem('token');
     router.push({ name: "login" });
 }
 
-//日付を選択して表示
-const setDate = ref('');
+//日付を表示
+const setDate = ref(''); //stateに空の値を設定
 
-const workDay = async () => {
-    const json = await axios.get("http://localhost/api/attendance", {
-        params: {
-            setDate: setDate.value,
-        }
-    });
-    console.log(json.data);
-}
+//pagination処理
+const page = ref(1); //現在のページを表示する(1ページ目)
 
 </script>
 
@@ -125,7 +158,7 @@ const workDay = async () => {
         <h1 class="header-logo">Atte</h1>
         <nav>
             <ul class="header-menu">
-                <li class="header-menu__item">ホーム</li>
+                <li><button class="header-menu__item" @click="home()">ホーム</button></li>
                 <li class="header-menu__item">日付一覧</li>
                 <li><button class="header-menu__item" @click="logout()">ログアウト</button></li>
             </ul>
@@ -134,9 +167,13 @@ const workDay = async () => {
     <main>
         <div class="index">
             <div class="date">
-                <input type="date"  v-model="setDate">
-                <button class="get-date" @click="workDay">表示</button>
-                <p class="work-day">勤務日 : {{ setDate }}</p>
+                <!-- <input type="date"  v-model="setDate">
+                <button class="get-date" @click="fetchAttendances">表示</button> -->
+                <p class="work-day">
+                    <button class="prev" @click="prev()"> ＜ </button>
+                    {{ setDate }}
+                    <button class="next" @click="next()"> ＞ </button>
+                </p>
             </div>
             <table class="work-data">
                 <tr class="work-data__title">
@@ -156,7 +193,8 @@ const workDay = async () => {
             </table>
             <v-pagination
                 v-model="page"
-                length="5">
+                length="5"
+                @click="fetchAttendances">
             </v-pagination>
         </div>
     </main>
@@ -192,6 +230,22 @@ const workDay = async () => {
     .work-day {
         margin-top: 20px;
         font-size: 20px;
+    }
+    .prev {
+        margin-right: 25px;
+        width: 40px;
+        height: 30px;
+        border: 1px solid blue;
+        color: blue;
+        background-color: white;
+    }
+    .next {
+        margin-left: 25px;
+        width: 40px;
+        height: 30px;
+        border: 1px solid blue;
+        color: blue;
+        background-color: white;
     }
     .work-data {
         width: 90%;
