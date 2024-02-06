@@ -19390,18 +19390,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     }();
 
-    //日付を変える処理
-    var today = new Date(); //今日の日付を取得
+    //日付を表示
+    var setDate = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(''); //stateに空の値を設定
 
+    //日付を変える処理
+    var workDay = new Date();
     //1日前にする
     var prev = /*#__PURE__*/function () {
       var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var yyyy, mm, dd;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              today.setDate(today.getDate() - 1);
-              console.log(today);
-            case 2:
+              workDay.setDate(workDay.getDate() - 1);
+              yyyy = workDay.getFullYear();
+              mm = ("0" + (workDay.getMonth() + 1)).slice(-2);
+              dd = ("0" + workDay.getDate()).slice(-2);
+              setDate.value = yyyy + "-" + mm + "-" + dd;
+            case 5:
             case "end":
               return _context3.stop();
           }
@@ -19414,12 +19420,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //1日後にする
     var next = /*#__PURE__*/function () {
       var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var yyyy, mm, dd;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) switch (_context4.prev = _context4.next) {
             case 0:
-              today.setDate(today.getDate() + 1);
-              console.log(today);
-            case 2:
+              workDay.setDate(workDay.getDate() + 1);
+              yyyy = workDay.getFullYear();
+              mm = ("0" + (workDay.getMonth() + 1)).slice(-2);
+              dd = ("0" + workDay.getDate()).slice(-2);
+              setDate.value = yyyy + "-" + mm + "-" + dd;
+            case 5:
             case "end":
               return _context4.stop();
           }
@@ -19429,52 +19439,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _ref5.apply(this, arguments);
       };
     }();
-
-    //無限ループが発生?
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onUpdated)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-      var workDay, yyyy, mm, dd;
-      return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-        while (1) switch (_context5.prev = _context5.next) {
-          case 0:
-            workDay = new Date(today);
-            yyyy = workDay.getFullYear();
-            mm = ("0" + (workDay.getMonth() + 1)).slice(-2);
-            dd = ("0" + workDay.getDate()).slice(-2);
-            setDate.value = yyyy + "-" + mm + "-" + dd;
-            fetchAttendances();
-          case 6:
-          case "end":
-            return _context5.stop();
-        }
-      }, _callee5);
-    })));
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.watch)(setDate, function (newSetDate) {
+      fetchAttendances(newSetDate);
+    });
     var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();
 
     //日付一覧ボタンを押すとstamp.vueへ移動
     var home = /*#__PURE__*/function () {
-      var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
-          while (1) switch (_context6.prev = _context6.next) {
+      var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
             case 0:
               router.push({
                 name: "stamp"
               });
             case 1:
             case "end":
-              return _context6.stop();
+              return _context5.stop();
           }
-        }, _callee6);
+        }, _callee5);
       }));
       return function home() {
-        return _ref7.apply(this, arguments);
+        return _ref6.apply(this, arguments);
       };
     }();
 
     //ログアウト機能
     var logout = /*#__PURE__*/function () {
-      var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-          while (1) switch (_context7.prev = _context7.next) {
+      var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
+        return _regeneratorRuntime().wrap(function _callee6$(_context6) {
+          while (1) switch (_context6.prev = _context6.next) {
             case 0:
               localStorage.removeItem('token');
               router.push({
@@ -19482,17 +19476,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               });
             case 2:
             case "end":
-              return _context7.stop();
+              return _context6.stop();
           }
-        }, _callee7);
+        }, _callee6);
       }));
       return function logout() {
-        return _ref8.apply(this, arguments);
+        return _ref7.apply(this, arguments);
       };
     }();
-
-    //日付を表示
-    var setDate = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(''); //stateに空の値を設定
 
     //pagination処理
     var page = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(1); //現在のページを表示する(1ページ目)
@@ -19500,17 +19491,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var __returned__ = {
       attendances: attendances,
       fetchAttendances: fetchAttendances,
-      today: today,
+      setDate: setDate,
+      workDay: workDay,
       prev: prev,
       next: next,
       router: router,
       home: home,
       logout: logout,
-      setDate: setDate,
       page: page,
       onMounted: vue__WEBPACK_IMPORTED_MODULE_0__.onMounted,
       ref: vue__WEBPACK_IMPORTED_MODULE_0__.ref,
-      onUpdated: vue__WEBPACK_IMPORTED_MODULE_0__.onUpdated,
+      watch: vue__WEBPACK_IMPORTED_MODULE_0__.watch,
       get axios() {
         return (axios__WEBPACK_IMPORTED_MODULE_1___default());
       },

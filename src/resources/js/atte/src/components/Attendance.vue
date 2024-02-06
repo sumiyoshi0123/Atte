@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, onUpdated } from "vue";
+import { onMounted, ref, watch } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
 
@@ -104,32 +104,31 @@ const fetchAttendances = async() => {
     attendances.value = bleakTime;
 };
 
+//日付を表示
+const setDate = ref(''); //stateに空の値を設定
 
 //日付を変える処理
-const today = new Date(); //今日の日付を取得
-
+const workDay = new Date();
 //1日前にする
 const prev = async () => {
-    today.setDate(today.getDate() - 1);
-    console.log(today);
-}
-//1日後にする
-const next = async () => {
-    today.setDate(today.getDate() + 1);
-    console.log(today);
-}
-
-//無限ループが発生?
-onUpdated(async () => {
-    const workDay = new Date(today);
+    workDay.setDate(workDay.getDate() - 1);
     const yyyy = workDay.getFullYear();
     const mm = ("0" + (workDay.getMonth() + 1)).slice(-2);
     const dd = ("0" + workDay.getDate()).slice(-2);
     setDate.value = yyyy + "-" + mm + "-" + dd;
+}
+//1日後にする
+const next = async () => {
+    workDay.setDate(workDay.getDate() + 1);
+    const yyyy = workDay.getFullYear();
+    const mm = ("0" + (workDay.getMonth() + 1)).slice(-2);
+    const dd = ("0" + workDay.getDate()).slice(-2);
+    setDate.value = yyyy + "-" + mm + "-" + dd;
+}
 
-    fetchAttendances();
+watch(setDate, (newSetDate) => {
+    fetchAttendances(newSetDate);
 });
-
 
 
 const router = useRouter();
@@ -144,9 +143,6 @@ const logout = async () => {
     localStorage.removeItem('token');
     router.push({ name: "login" });
 }
-
-//日付を表示
-const setDate = ref(''); //stateに空の値を設定
 
 //pagination処理
 const page = ref(1); //現在のページを表示する(1ページ目)
