@@ -41,7 +41,9 @@ const attendances = ref([
 
         "workTime": 0,
 
-        "bleakTime": 0
+        "bleakTime": 0,
+
+        "resultWorkTime": 0,
     },
 ]);
 
@@ -56,7 +58,7 @@ onMounted(async () => {
     fetchAttendances(); //attendancesの内容を書き換えて表示するメソッド
 });
 
-const fetchAttendances = async() => {
+const fetchAttendances = async () => {
     const json = await axios.get("http://localhost/api/attendance", {
         params: {
             // ここにクエリパラメータを指定する
@@ -71,8 +73,8 @@ const fetchAttendances = async() => {
         const startDate = new Date(attendance.date + " " + attendance.start_time)
         const endDate = new Date(attendance.date + " " + attendance.end_time)
 
-        attendance.workTime = (endDate - startDate) / 1000 / 3600
-        //ミリ秒->秒->時間へ変換
+        attendance.workTime = (endDate - startDate)
+        //ミリ秒->秒->時間へ変換  / 1000 / 3600
 
         return attendance
 
@@ -85,20 +87,28 @@ const fetchAttendances = async() => {
             const bleakHours = attendance.bleak.map((bleak) => {
                 const start = new Date(attendance.date + " " + bleak.start_time)
                 const end = new Date(attendance.date + " " + bleak.end_time)
-                return (end - start) / 1000 / 3600
+                return (end - start)
             });
             const totalBleakHours = bleakHours.reduce((sum, bleakHour) => {
                 return sum + bleakHour;
             }, 0);
-                attendance.bleakTime = totalBleakHours;
+            attendance.bleakTime = totalBleakHours;
         } else {
             for (const bleak of attendance.bleak) {
                 const start = new Date(attendance.date + " " + bleak.start_time)
                 const end = new Date(attendance.date + " " + bleak.end_time)
 
-                attendance.bleakTime = (end - start) / 1000 / 3600
+                attendance.bleakTime = (end - start)
             }
         }
+
+        //フォーマット
+        const hours = ("0" + Math.floor(attendance.bleakTime / 1000 / 60 / 60) % 24).slice(-2);
+        const min = ("0" + Math.floor(attendance.bleakTime / 1000 / 60) % 60).slice(-2);
+        const sec = ("0" + Math.floor(attendance.bleakTime / 1000) % 60).slice(-2);
+        const format = hours + ":" + min + ":" + sec;
+        attendance.bleakTime = format;
+
         return attendance
     })
     attendances.value = bleakTime;
@@ -163,8 +173,6 @@ const page = ref(1); //現在のページを表示する(1ページ目)
     <main>
         <div class="index">
             <div class="date">
-                <!-- <input type="date"  v-model="setDate">
-                <button class="get-date" @click="fetchAttendances">表示</button> -->
                 <p class="work-day">
                     <button class="prev" @click="prev()"> ＜ </button>
                     {{ setDate }}

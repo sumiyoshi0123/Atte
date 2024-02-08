@@ -19301,7 +19301,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         "updated_at": null
       }],
       "workTime": 0,
-      "bleakTime": 0
+      "bleakTime": 0,
+      "resultWorkTime": 0
     }]);
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       var today, yyyy, mm, dd;
@@ -19342,8 +19343,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               workTime = data.map(function (attendance) {
                 var startDate = new Date(attendance.date + " " + attendance.start_time);
                 var endDate = new Date(attendance.date + " " + attendance.end_time);
-                attendance.workTime = (endDate - startDate) / 1000 / 3600;
-                //ミリ秒->秒->時間へ変換
+                attendance.workTime = endDate - startDate;
+                //ミリ秒->秒->時間へ変換  / 1000 / 3600
 
                 return attendance;
               });
@@ -19354,7 +19355,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   var bleakHours = attendance.bleak.map(function (bleak) {
                     var start = new Date(attendance.date + " " + bleak.start_time);
                     var end = new Date(attendance.date + " " + bleak.end_time);
-                    return (end - start) / 1000 / 3600;
+                    return end - start;
                   });
                   var totalBleakHours = bleakHours.reduce(function (sum, bleakHour) {
                     return sum + bleakHour;
@@ -19368,7 +19369,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       var bleak = _step.value;
                       var start = new Date(attendance.date + " " + bleak.start_time);
                       var end = new Date(attendance.date + " " + bleak.end_time);
-                      attendance.bleakTime = (end - start) / 1000 / 3600;
+                      attendance.bleakTime = end - start;
                     }
                   } catch (err) {
                     _iterator.e(err);
@@ -19376,6 +19377,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     _iterator.f();
                   }
                 }
+
+                //フォーマット
+                var hours = ("0" + Math.floor(attendance.bleakTime / 1000 / 60 / 60) % 24).slice(-2);
+                var min = ("0" + Math.floor(attendance.bleakTime / 1000 / 60) % 60).slice(-2);
+                var sec = ("0" + Math.floor(attendance.bleakTime / 1000) % 60).slice(-2);
+                var format = hours + ":" + min + ":" + sec;
+                attendance.bleakTime = format;
                 return attendance;
               });
               attendances.value = bleakTime;
@@ -19918,7 +19926,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $setup.logout();
     })
-  }, "ログアウト")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <input type=\"date\"  v-model=\"setDate\">\n                <button class=\"get-date\" @click=\"fetchAttendances\">表示</button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, "ログアウト")])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("main", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "prev",
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $setup.prev();
