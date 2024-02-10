@@ -20,10 +20,10 @@ class RegisteredUserController extends Controller
         $user = Auth::user();
         User::all();
 
-        $userName = User::where('name', $user->name)->get();
+        $loginName = User::where('name', $user->name)->get('name');
 
         return response()->json([
-            'userName' => $userName
+            'loginName' => $loginName
         ]);
     }
 

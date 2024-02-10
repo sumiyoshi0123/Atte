@@ -43,7 +43,6 @@ const attendances = ref([
 
         "bleakTime": 0,
 
-        "resultWorkTime": 0,
     },
 ]);
 
@@ -53,7 +52,6 @@ onMounted(async () => {
     const mm = ("0" + (today.getMonth() + 1)).slice(-2); //0 + 月(1~12)の右から2文字を指定
     const dd = ("0" + today.getDate()).slice(-2);
     setDate.value = yyyy + "-" + mm + "-" + dd;
-    //setDate.value = "2024-01-31";
 
     fetchAttendances(); //attendancesの内容を書き換えて表示するメソッド
 });
@@ -102,17 +100,20 @@ const fetchAttendances = async () => {
             }
         }
 
-        //フォーマット
-        const hours = ("0" + Math.floor(attendance.bleakTime / 1000 / 60 / 60) % 24).slice(-2);
-        const min = ("0" + Math.floor(attendance.bleakTime / 1000 / 60) % 60).slice(-2);
-        const sec = ("0" + Math.floor(attendance.bleakTime / 1000) % 60).slice(-2);
-        const format = hours + ":" + min + ":" + sec;
-        attendance.bleakTime = format;
-
         return attendance
     })
     attendances.value = bleakTime;
 };
+
+//フォーマット
+const formatTime = (time) => {
+    const hours = ("0" + Math.floor(time / 1000 / 60 / 60) % 24).slice(-2);
+    const min = ("0" + Math.floor(time / 1000 / 60) % 60).slice(-2);
+    const sec = ("0" + Math.floor(time / 1000) % 60).slice(-2);
+    const format = hours + ":" + min + ":" + sec;
+    return format
+};
+
 
 //日付を表示
 const setDate = ref(''); //stateに空の値を設定
@@ -191,8 +192,8 @@ const page = ref(1); //現在のページを表示する(1ページ目)
                     <th>{{ attendance.user.name }}</th>
                     <th>{{ attendance.start_time }}</th>
                     <th>{{ attendance.end_time }}</th>
-                    <th>{{ attendance.bleakTime }}</th>
-                    <th>{{ attendance.workTime - attendance.bleakTime }}</th>
+                    <th>{{ formatTime(attendance.bleakTime) }}</th>
+                    <th>{{ formatTime(attendance.workTime - attendance.bleakTime) }}</th>
                     </tr>
             </table>
             <v-pagination

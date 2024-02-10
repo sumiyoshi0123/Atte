@@ -1,8 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
-import User from './User.vue'
+
+//ユーザー名の表示
+const users = ref('')
+
+onMounted(async () => {
+    const json = await axios.get("http://localhost/api/register");
+    const loginUser = json.data.loginName;
+    const userName = loginUser[0];
+
+    users.value = userName['name'];
+});
 
 const start = ref({
     start: new Date()
@@ -11,17 +21,6 @@ const start = ref({
 const end = ref({
     end: new Date()
 });
-
-//ユーザー名の表示
-const users = ref([{
-    "id": 1,
-    "name": "テスト一郎",
-    "email": "test01@gmail.com",
-    "email_verified_at": null,
-    "created_at": null,
-    "updated_at": null
-}])
-
 
 //出勤登録
 const addWork = async() => {
@@ -75,10 +74,7 @@ const logout = async () => {
         <main>
             <div class="stamp">
                 <p class="message">
-                    <User v-for="user in users"
-                    :key="user.id"
-                    :name="user.name">
-                    </User>さんお疲れ様です！
+                    {{ users }}さんお疲れ様です！
                 </p>
                 <div class="stamp-items">
                     <button class="stamp-item__1" @click="addWork">勤務開始</button>
